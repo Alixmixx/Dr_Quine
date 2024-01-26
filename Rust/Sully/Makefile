@@ -6,5 +6,6 @@ run:
 
 clean:
 	cargo clean
+	rm -rf ../Sully_*
 
 .PHONY: all clean
