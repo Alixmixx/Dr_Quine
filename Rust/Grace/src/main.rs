@@ -1,20 +1,38 @@
 use std::fs::File;
 use std::io::Write;
+const SOURCE_CODE: &str = r##"const SOURCE_CODE: &str = {0:?};
 
-mod macros {
-    #[macro_export]
-    macro_rules! write_to_file {
-        () => {{
-            let data = format!(
-                "use std::fs::File;\nuse std::io::Write;\n\nmod macros {{\n    #[macro_export]\n    macro_rules! write_to_file {{\n        () => {{\n            let data = format!(\n                \"{}\",\n            );\n            let mut file = File::create(\"Grace_kid.rs\").expect(\"Unable to create file\");\n            file.write_all(data.as_bytes()).expect(\"Unable to write data\");\n        }};\n    }}\n}}\n\nfn main() {{\n    write_to_file!();\n}}\n",
-                "use std::fs::File;\\nuse std::io::Write;\\n\\nmod macros {{\\n    #[macro_export]\\n    macro_rules! write_to_file {{\\n        () => {{\\n            let data = format!(\\n                \\\"{}\\\",\\n            );\\n            let mut file = File::create(\\\"Grace_kid.rs\\\").expect(\\\"Unable to create file\\\");\\n            file.write_all(data.as_bytes()).expect(\\\"Unable to write data\\\");\\n        }};\\n    }}\\n}}\\n\\nfn main() {{\\n    write_to_file!();\\n}}\\n"
-            );
-            let mut file = File::create("Grace_kid.rs").expect("Unable to create file");
-            file.write_all(data.as_bytes()).expect("Unable to write data");
-        }};
-    }
+#[macro_export]
+macro_rules! write_to_file {
+    ($file_name:expr) => {{
+        let data = format!("use std::fs::File;
+use std::io::Write;
+const SOURCE_CODE: &str = r{}#\"{}\"#{};
+
+{}", '#', SOURCE_CODE, '#', &SOURCE_CODE[34..]);
+        let mut file = File::create($file_name).expect("Unable to create file");
+        file.write_all(data.as_bytes()).expect("Unable to write data");
+    }};
 }
 
 fn main() {
-    write_to_file!();
+    write_to_file!("Grace_kid.rs");
+}
+"##;
+
+#[macro_export]
+macro_rules! write_to_file {
+    ($file_name:expr) => {{
+        let data = format!("use std::fs::File;
+use std::io::Write;
+const SOURCE_CODE: &str = r{}#\"{}\"#{};
+
+{}", '#', SOURCE_CODE, '#', &SOURCE_CODE[34..]);
+        let mut file = File::create($file_name).expect("Unable to create file");
+        file.write_all(data.as_bytes()).expect("Unable to write data");
+    }};
+}
+
+fn main() {
+    write_to_file!("Grace_kid.rs");
 }
