@@ -28,7 +28,7 @@ fn main() {
     let data = format!("use std::process::Command;
 use std::fs::File;
 use std::io::Write;
-    
+
 const SOURCE_CODE: &str = r{}#\"{}\"#{};
 
 fn main() {{
