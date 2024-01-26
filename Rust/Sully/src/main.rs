@@ -8,8 +8,11 @@ use std::io::Write;
 
 const SOURCE_CODE: &str = r#""#;
 
+fn main() {{
+    let i = {};
+
 fn main() {
-    let i = 5;
+    let i = {};
     let name = format!("Sully_{}", i);
 
     if i <= 0 {
@@ -17,17 +20,20 @@ fn main() {
     }
 
     Command::new("cargo")
+    .current_dir("../")
     .args(&["new", "--bin", name.as_str()])
     .status()
     .expect("Failed to build the project");
 
     let data = format!("use std::process::Command;
-    use std::fs::File;
-    use std::io::Write;
+use std::fs::File;
+use std::io::Write;
     
-    const SOURCE_CODE: &str = r{}#\"{}\"#{};
+const SOURCE_CODE: &str = r{}#\"{}\"#{};
 
-{}", '#', SOURCE_CODE, '#', &SOURCE_CODE[101..]);
+fn main() {{
+    let i = {};
+{}", '#', SOURCE_CODE, '#', i - 1, &SOURCE_CODE[159..]);
     let mut file = File::create(format!("../{}/src/main.rs", name)).expect("Unable to open file");
     file.write_all(data.as_bytes()).expect("Unable to write data");
 
@@ -54,12 +60,14 @@ fn main() {
     .expect("Failed to build the project");
 
     let data = format!("use std::process::Command;
-    use std::fs::File;
-    use std::io::Write;
-    
-    const SOURCE_CODE: &str = r{}#\"{}\"#{};
+use std::fs::File;
+use std::io::Write;
 
-{}", '#', SOURCE_CODE, '#', &SOURCE_CODE[101..]);
+const SOURCE_CODE: &str = r{}#\"{}\"#{};
+
+fn main() {{
+    let i = {};
+{}", '#', SOURCE_CODE, '#', i - 1, &SOURCE_CODE[159..]);
     let mut file = File::create(format!("../{}/src/main.rs", name)).expect("Unable to open file");
     file.write_all(data.as_bytes()).expect("Unable to write data");
 
