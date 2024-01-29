@@ -17,7 +17,7 @@ diff: $(NAME)
 
 clean:
 	rm -f $(OBJ_FILES)
-	rm -f Sully_*.c
+	rm -f $(NAME)_*.c
 
 fclean: clean
 	rm -f $(NAME)

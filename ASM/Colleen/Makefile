@@ -13,7 +13,8 @@ $(NAME): $(OBJ_FILES)
 	nasm -f macho64 -o $@ $<
 
 diff: $(NAME)
-	./$(NAME)
+	./$(NAME) > $(NAME)_kid.s
+	diff $(NAME).s $(NAME)_kid.s
 
 clean:
 	rm -f $(OBJ_FILES)

@@ -13,12 +13,12 @@ $(NAME): $(OBJ_FILES)
 	gcc -Wall -Wextra -Werror -c $^ -o $@
 
 diff: $(NAME)
-	./$(NAME) > Colleen_kid.c
-	diff Colleen.c Colleen_kid.c	
+	./$(NAME) > $(NAME)_kid.c
+	diff $(NAME).c $(NAME)_kid.c	
 
 clean:
 	rm -f $(OBJ_FILES)
-	rm -f Colleen_kid.c
+	rm -f $(NAME)_kid.c
 
 fclean: clean
 	rm -f $(NAME)

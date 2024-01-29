@@ -14,11 +14,11 @@ $(NAME): $(OBJ_FILES)
 
 diff: $(NAME)
 	./$(NAME)
-	diff Grace.c Grace_kid.c	
+	diff $(NAME).c $(NAME)_kid.c	
 
 clean:
 	rm -f $(OBJ_FILES)
-	rm -f Grace_kid.c
+	rm -f $(NAME)_kid.c
 
 fclean: clean
 	rm -f $(NAME)
