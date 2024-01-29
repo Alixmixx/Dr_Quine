@@ -7,7 +7,7 @@ OBJ_FILES = $(SRC_FILES:.s=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	ld -o $(NAME) $(OBJ_FILES)
+	gcc -o $(NAME) $(OBJ_FILES)
 
 %.o: %.s
 	nasm -f macho64 -o $@ $<
