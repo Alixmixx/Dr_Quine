@@ -1,4 +1,6 @@
 %define MAIN _main
+%define OPEN_CALL_NB 0x2000005
+%define CLOSE_CALL_NB 0x2000006
 
 section .text
 	global _main
@@ -7,19 +9,25 @@ section .text
 _main:
 	push rbp
 	mov rbp, rsp
-	call open
-	call close
+	call _open
+	call _close
+	call _exit
 
-open:
-	mov eax, 2
+_open:
+	mov eax, OPEN_CALL_NB
 	lea rdi, [rel filename]
-	mov rsi, 0x601
-	mov rdx, 644o
+	mov rsi, 0x202
+	mov rdx, 420
 	syscall
 
-close:
+_close:
 	mov rdi, rax
-	mov eax, 3
+	mov eax, CLOSE_CALL_NB
+	syscall
+
+_exit:
+	leave
+	ret
 
 
 section .data

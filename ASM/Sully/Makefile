@@ -1,6 +1,6 @@
-NAME = Grace
+NAME = Sully
 
-SRC_FILES = Grace.s
+SRC_FILES = Sully.s
 
 OBJ_FILES = $(SRC_FILES:.s=.o)
 
