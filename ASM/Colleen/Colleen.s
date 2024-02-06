@@ -8,9 +8,9 @@ _main:
 	mov rbp, rsp
 	lea rdi, [rel msg]
 	lea rsi, [rel msg]
-	mov rdx, 10
-	mov rcx, 34
-	mov r8, 9
+	mov rdx, 10			; new line
+	mov rcx, 34			; double quote
+	mov r8, 9			; tab
 	call _printf ; extern printf call
 	pop rbp
 	xor rax, rax
