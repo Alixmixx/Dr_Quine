@@ -2,6 +2,7 @@
 section .text
 	global _main
 	extern _dprintf
+	extern _sprintf
 	extern _system
 
 _main:
@@ -12,6 +13,24 @@ _main:
 
 _checknum:
 	;if (filenum < 0 ) exit
+
+_create_names:
+	sub rsp, 8
+	mov rdi, 5
+	mov [rel filenum], rdi		; filenum = 5
+	lea rdi, [rel source]
+	lea rsi, [rel sourcename]
+	mov rdx, [rel filenum]
+	call _sprintf				; source = "Sully_5.c"
+	lea rdi, [rel object]
+	lea rsi, [rel objectname]
+	mov rdx, [rel filenum]
+	call _sprintf				; object = "Sully_5.o"
+	lea rdi, [rel program]
+	lea rsi, [rel outname]
+	mov rdx, [rel filenum]
+	call _sprintf				; program = "Sully_5"
+	add rsp, 8
 
 _open:
 	mov eax, 0x2000005 			; open syscall
@@ -25,7 +44,7 @@ _write:
 	mov rbp, rsp
 	mov rdi, rax
 	lea rsi, [rel msg]
-	lea rdx, [rel msg]
+	lea rdx, [rel program]
 	mov rcx, 10			; new line
 	mov r8, 34			; double quote
 	mov r9, 9			; tab
@@ -52,11 +71,13 @@ _exit:
 	ret
 
 section .data
-	filename: db "Sully_%d.%c", 0
+	sourcename: db "Sully_%1$d.c", 0
+	objectname: db "Sully_%1$d.o", 0
 	outname: db "Sully_%d", 0
 	command_template: db "nasm -f macho64 %1$s -o %2$s && gcc -o %3$s %2$s && ./%3$s", 0 
-	msg: db ";Quine%2$c%%define MAIN _main%2$c%%define OPEN_CALL_NB 0x2000005%2$c%%define CLOSE_CALL_NB 0x2000006%2$c%2$csection .text%2$c%4$cglobal _main%2$c%4$cextern _dprintf%2$c%2$c_main:%2$c%4$cpush rbp%2$c%4$cmov rbp, rsp%2$c%4$ccall _open%2$c%4$ccall _exit%2$c%2$c_open:%2$c%4$cmov eax, OPEN_CALL_NB%2$c%4$clea rdi, [rel filename]%2$c%4$cmov rsi, 0x202%2$c%4$cmov rdx, 420%2$c%4$csyscall%2$c%2$c_write:%2$c%4$cpush rbp%2$c%4$cmov rbp, rsp%2$c%4$cmov rdi, rax%2$c%4$clea rsi, [rel msg]%2$c%4$clea rdx, [rel msg]%2$c%4$cmov rcx, 10%4$c%4$c%4$c; new line%2$c%4$cmov r8, 34%4$c%4$c%4$c; double quote%2$c%4$cmov r9, 9%4$c%4$c%4$c; tab%2$c%4$ccall _dprintf%2$c%2$c_close:%2$c%4$cmov eax, CLOSE_CALL_NB%2$c%4$csyscall%2$c%2$c_exit:%2$c%4$cleave%2$c%4$cret%2$c%2$c%2$csection .data%2$c%4$cfilename: db %3$cGrace_kid.s%3$c, 0%2$c%4$cmsg: db %3$c%1$s%3$c, 0", 0
+	msg: db "%s", 0
 	
+section .bss
 	command: resb 100
 	source: resb 15
 	object: resb 15
