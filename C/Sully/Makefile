@@ -12,7 +12,7 @@ $(NAME): $(OBJ_FILES)
 %.o: %.c
 	gcc -Wall -Wextra -Werror -c $^ -o $@
 
-diff: $(NAME)
+run: $(NAME)
 	./$(NAME)
 
 clean:
@@ -25,4 +25,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re diff
+.PHONY: all clean fclean re run

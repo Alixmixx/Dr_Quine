@@ -12,9 +12,8 @@ $(NAME): $(OBJ_FILES)
 %.o: %.s
 	nasm -f macho64 -o $@ $<
 
-diff: $(NAME)
-	./$(NAME) > $(NAME)_kid.s
-	diff $(NAME).s $(NAME)_kid.s
+run: $(NAME)
+	./$(NAME)
 
 clean:
 	rm -f $(OBJ_FILES)
@@ -25,4 +24,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re diff
+.PHONY: all clean fclean re run

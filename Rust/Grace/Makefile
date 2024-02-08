@@ -5,7 +5,7 @@ run:
 	cargo run --release
 
 diff:
-	cargo run --release > Grace_kid.rs
+	cargo run --release
 	diff src/main.rs Grace_kid.rs
 
 clean:
